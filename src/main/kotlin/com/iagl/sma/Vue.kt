@@ -11,7 +11,7 @@ import javax.swing.JScrollPane
 /**
  * Created by Nathan on 09/01/2017.
  */
-
+//JPanel?
 class Vue(title:String,sma: SMA):JFrame(title),Observer{
 
     var gridPanel : JPanel
@@ -32,11 +32,12 @@ class Vue(title:String,sma: SMA):JFrame(title),Observer{
 //        scrollPane.add(gridPanel)
         contentPane = scrollPane
         isVisible = true
-        setSize(500,500)
+        setSize(sma.properties.canvasSizeX,sma.properties.canvasSizeY)
         drawGrid()
     }
 
     override fun paint(g: Graphics?) {
+        gridPanel.background = Color.white
         super.paint(g)
         updateGrid(sma)
 
@@ -84,7 +85,7 @@ class Vue(title:String,sma: SMA):JFrame(title),Observer{
 }
 
 fun main(args: Array<String>) {
-    val sma = SMA(10, 10)
+    val sma = SMA()
     Vue("coucou", sma)
     sma.addAgent(Agent(9,9, Color.RED))
 }
