@@ -8,15 +8,21 @@ import java.util.*
  */
 
 class SMA(var width : Int , var height : Int): Observable() {
-    var grid : Array<Array<Agent?>>
+    var environnement: Array<Array<Agent?>>
     init {
-        grid = Array<Array<Agent?>>(width,{it->Array<Agent?>(height,{it -> null})})
-        grid[0][0] = Agent(0,0, Color.BLUE)
+        environnement = Array<Array<Agent?>>(width,{ it->Array<Agent?>(height,{ it -> null})})
+        environnement[0][0] = Agent(0,0, Color.BLUE)
     }
 
     fun addAgent(agent : Agent){
-        grid[agent.x][agent.y]=agent
+        environnement[agent.x][agent.y]=agent
         setChanged()
         notifyObservers()
+    }
+
+    fun run(){
+        while (true){
+            environnement.forEach { it.forEach { if(it!=null) it.decide(environnement) } }
+        }
     }
 }

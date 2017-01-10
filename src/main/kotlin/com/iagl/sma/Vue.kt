@@ -6,6 +6,7 @@ import java.awt.GridLayout
 import java.util.*
 import javax.swing.JFrame
 import javax.swing.JPanel
+import javax.swing.JScrollPane
 
 /**
  * Created by Nathan on 09/01/2017.
@@ -15,8 +16,8 @@ class Vue(title:String,sma: SMA):JFrame(title),Observer{
 
     var gridPanel : JPanel
     var sma : SMA
-    private var nbLines = sma.grid[0].size
-    private var nbColumns = sma.grid.size
+    private var nbLines = sma.environnement[0].size
+    private var nbColumns = sma.environnement.size
     private var columnStep = width/nbColumns
         get() = width/nbColumns
     private var lineStep =height/nbLines
@@ -27,7 +28,9 @@ class Vue(title:String,sma: SMA):JFrame(title),Observer{
         sma.addObserver(this)
         gridPanel= JPanel(GridLayout(1,1))
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-        contentPane = gridPanel
+        var scrollPane = JScrollPane(gridPanel)
+//        scrollPane.add(gridPanel)
+        contentPane = scrollPane
         isVisible = true
         setSize(500,500)
         drawGrid()
@@ -52,11 +55,9 @@ class Vue(title:String,sma: SMA):JFrame(title),Observer{
     }
 
     private fun drawParticules(sma: SMA){
-        println("drawParticules")
-        sma.grid.forEach {
+        sma.environnement.forEach {
             it.forEach {
                 if(it != null) {
-                    println("Agent ! $it")
                     drawParticule(it)
                 }
             }
