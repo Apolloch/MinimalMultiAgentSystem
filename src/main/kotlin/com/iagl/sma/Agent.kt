@@ -22,13 +22,12 @@ open class Agent(var x:Int,var y:Int,var color: Color){
         tempX = x+direction.x
         tempY = y+direction.y
 
-        if(tempX > 0 && tempX<environnement.size && tempY > 0 && tempY<environnement[0].size){
+        if(tempX >= 0 && tempX<environnement.size && tempY >= 0 && tempY<environnement[0].size){
             if(environnement[tempX][tempY] == null){
                 environnement[x][y]=null
                 x = tempX
                 y=tempY
                 environnement[tempX][tempY]=this
-                println(this)
             }
             else{
                 particleCollisionGestion(environnement)
@@ -45,7 +44,9 @@ open class Agent(var x:Int,var y:Int,var color: Color){
 
     private fun particleCollisionGestion(environnement: Array<Array<Agent?>>) {
         environnement[x+direction.x][y+direction.y]?.direction=direction
-        direction = Direction.IDLE
+        direction = direction.reverse()
+        println(this)
+
     }
 
     override fun toString(): String {

@@ -10,24 +10,24 @@ import java.util.*
 
 class SMA(): Observable() {
     var environnement: Array<Array<Agent?>>
+    var agents = arrayListOf<Agent>()
     var properties : Properties
     init {
         properties = loadProperties("properties.json")
         environnement = Array<Array<Agent?>>(properties.gridSizeX,{ it->Array<Agent?>(properties.gridSizeY,{ it -> null})})
-        environnement[0][0] = Agent(0,0, Color.BLUE)
     }
 
     fun addAgent(agent : Agent){
+        println(agent)
+        agents.add(agent)
         environnement[agent.x][agent.y]=agent
-        setChanged()
-        notifyObservers()
     }
 
     fun run(){
         init()
         var iterationCount = 0
         while ( properties.nbTicks==0 || iterationCount<properties.nbTicks){
-            environnement.forEach { it.forEach { if(it!=null) it.decide(environnement) } }
+            agents.forEach { it.decide(environnement) }
             Thread.sleep(properties.delay.toLong())
             if(properties.trace)
                 println("Tick")
@@ -41,12 +41,14 @@ class SMA(): Observable() {
         var agentCount = 0
         var x : Int
         var y : Int
+        var agent : Agent
         var randomGenerator = SecureRandom()
         while (agentCount < properties.nbParticles){
             x = randomGenerator.nextInt(properties.gridSizeX)
             y = randomGenerator.nextInt(properties.gridSizeY)
             if(environnement[x][y]==null){
-                environnement[x][y] = Agent(x,y,Color.RED)
+                agent = Agent(x,y, Color((Math.random() * 0x1000000).toInt() ))
+                addAgent(agent)
                 agentCount++
             }
         }

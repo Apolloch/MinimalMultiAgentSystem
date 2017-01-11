@@ -45,12 +45,16 @@ class Vue(title:String,sma: SMA):JFrame(title),Observer{
 
     private fun drawGrid() {
         val graphics = gridPanel.graphics
-        graphics.color = Color.BLACK
-        for(i in 1..nbColumns){
-            graphics.drawLine(columnStep*i,0,columnStep*i,nbLines*lineStep)
-        }
-        for(i in 1..nbLines){
-            graphics.drawLine(0,lineStep*i,nbColumns*columnStep,lineStep*i)
+        graphics.color = Color.WHITE
+        graphics.fillRect(0,0,gridPanel.width,gridPanel.height)
+        if(sma.properties.grid) {
+            graphics.color = Color.BLACK
+            for (i in 1..nbColumns) {
+                graphics.drawLine(columnStep * i, 0, columnStep * i, nbLines * lineStep)
+            }
+            for (i in 1..nbLines) {
+                graphics.drawLine(0, lineStep * i, nbColumns * columnStep, lineStep * i)
+            }
         }
 
     }
