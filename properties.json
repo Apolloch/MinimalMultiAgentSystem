@@ -1,16 +1,16 @@
 {
-  "gridSizeX":100,
-  "gridSizeY":100,
-  "canvasSizeX":500,
-  "canvasSizeY":500,
+  "gridSizeX":300,
+  "gridSizeY":300,
+  "canvasSizeX":1000,
+  "canvasSizeY":1000,
   "boxSize":0,
-  "delay":40,
+  "delay":50,
   "scheduling":"SEQUENTIEL",
   "nbTicks":0,
   "grid":false,
-  "trace":true,
+  "trace":false,
   "seed":0,
   "refresh":100,
-  "nbParticles":100,
+  "nbParticles":50000,
   "torique" : true
 }

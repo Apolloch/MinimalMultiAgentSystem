@@ -12,7 +12,7 @@ import javax.swing.JScrollPane
  * Created by Nathan on 09/01/2017.
  */
 //JPanel?
-class Vue(title:String,sma: SMA):JFrame(title),Observer{
+class Vue(title:String,sma: SMA):JPanel(),Observer{
 
     var gridPanel : JPanel
     var sma : SMA
@@ -27,63 +27,54 @@ class Vue(title:String,sma: SMA):JFrame(title),Observer{
         this.sma = sma
         sma.addObserver(this)
         gridPanel= JPanel(GridLayout(1,1))
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-        var scrollPane = JScrollPane(gridPanel)
-//        scrollPane.add(gridPanel)
-        contentPane = scrollPane
-        isVisible = true
-        setSize(sma.properties.canvasSizeX,sma.properties.canvasSizeY)
-        drawGrid()
     }
 
     override fun paint(g: Graphics?) {
-        gridPanel.background = Color.white
-        super.paint(g)
-        updateGrid(sma)
+        g?.color = Color.white
+        g?.fillRect(0,0,width,height)
+        updateGrid(sma,g)
+        super.paintComponents(g)
+
 
     }
 
-    private fun drawGrid() {
-        val graphics = gridPanel.graphics
-        graphics.color = Color.WHITE
-        graphics.fillRect(0,0,gridPanel.width,gridPanel.height)
+    private fun drawGrid(graphics: Graphics?) {
         if(sma.properties.grid) {
-            graphics.color = Color.BLACK
+            graphics?.color = Color.BLACK
             for (i in 1..nbColumns) {
-                graphics.drawLine(columnStep * i, 0, columnStep * i, nbLines * lineStep)
+                graphics?.drawLine(columnStep * i, 0, columnStep * i, nbLines * lineStep)
             }
             for (i in 1..nbLines) {
-                graphics.drawLine(0, lineStep * i, nbColumns * columnStep, lineStep * i)
+                graphics?.drawLine(0, lineStep * i, nbColumns * columnStep, lineStep * i)
             }
         }
 
     }
 
-    private fun drawParticules(sma: SMA){
+    private fun drawParticules(sma: SMA,graphics: Graphics?){
         sma.environnement.forEach {
             it.forEach {
                 if(it != null) {
-                    drawParticule(it)
+                    drawParticule(it,graphics)
                 }
             }
         }
     }
 
-    private fun  drawParticule(agent: Agent) {
-        val graphics = gridPanel.graphics
-        graphics.color = agent.color
-        graphics.fillOval(agent.x*columnStep,agent.y*lineStep,columnStep,lineStep)
+    private fun  drawParticule(agent: Agent,graphics:Graphics?) {
+        graphics?.color = agent.color
+        graphics?.fillOval(agent.x*columnStep,agent.y*lineStep,columnStep,lineStep)
     }
 
     override fun update(o: Observable?, arg: Any?) {
         if(o is SMA){
-            updateGrid(o)
+            repaint()
         }
     }
 
-    private fun  updateGrid(sma: SMA) {
-        drawGrid()
-        drawParticules(sma)
+    private fun  updateGrid(sma: SMA,graphics: Graphics?) {
+        drawGrid(graphics)
+        drawParticules(sma,graphics)
     }
 
 }

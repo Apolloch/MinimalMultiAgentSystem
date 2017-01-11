@@ -25,7 +25,6 @@ data class Properties (
         var torique : Boolean
 )
 
-
 enum class Schedule(){ EQUITABLE , SEQUENTIEL ,ALEATOIRE }
 
 fun loadProperties(propertiesFilePath : String):Properties {

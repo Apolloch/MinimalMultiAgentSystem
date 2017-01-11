@@ -45,7 +45,7 @@ open class Agent(var x:Int,var y:Int,var color: Color){
     private fun particleCollisionGestion(environnement: Array<Array<Agent?>>) {
         environnement[x+direction.x][y+direction.y]?.direction=direction
         direction = direction.reverse()
-        println(this)
+        //println(this)
 
     }
 

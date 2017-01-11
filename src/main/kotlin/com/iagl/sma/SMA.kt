@@ -3,6 +3,8 @@ package com.iagl.sma
 import java.awt.Color
 import java.security.SecureRandom
 import java.util.*
+import javax.swing.JFrame
+import javax.swing.JScrollPane
 
 /**
  * Created by Nathan on 09/01/2017.
@@ -18,7 +20,6 @@ class SMA(): Observable() {
     }
 
     fun addAgent(agent : Agent){
-        println(agent)
         agents.add(agent)
         environnement[agent.x][agent.y]=agent
     }
@@ -47,7 +48,7 @@ class SMA(): Observable() {
             x = randomGenerator.nextInt(properties.gridSizeX)
             y = randomGenerator.nextInt(properties.gridSizeY)
             if(environnement[x][y]==null){
-                agent = Agent(x,y, Color((Math.random() * 0x1000000).toInt() ))
+                agent = Agent(x,y, Color((Math.random() * 0x1000000).toInt() ).brighter())
                 addAgent(agent)
                 agentCount++
             }
@@ -57,6 +58,11 @@ class SMA(): Observable() {
 
 fun main(args: Array<String>) {
     var sma = SMA()
-    Vue("sma",sma)
+    var frame = JFrame("sma")
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+    var scrollPane = JScrollPane( Vue("sma",sma) )
+    frame.contentPane = scrollPane
+    frame.setSize(sma.properties.canvasSizeX,sma.properties.canvasSizeY)
+    frame.isVisible = true
     sma.run()
 }
