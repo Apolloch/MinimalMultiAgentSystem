@@ -1,13 +1,18 @@
-package com.iagl.sma
+package com.iagl.sma.particules
 
+import com.iagl.sma.core.Agent
+import com.iagl.sma.core.Direction
+import com.iagl.sma.core.Properties
 import java.awt.Color
 
 /**
  * Created by bacquet on 17/01/17.
  */
-class Particule(x:Int,y:Int,color: Color,direction: Direction) : Agent(x,y,color,direction) {
+class Particule(x:Int, y:Int, color: Color, var direction: Direction) : Agent(x,y,color) {
     private var tempX =0
     private var tempY =0
+
+
     override fun decide(environnement: Array<Array<Agent?>>) {
 
 
@@ -22,15 +27,15 @@ class Particule(x:Int,y:Int,color: Color,direction: Direction) : Agent(x,y,color
                 environnement[tempX][tempY]=this
             }
             else{
-                particleCollisionGestion(environnement)
+                particleCollisionGestion(environnement as Array<Array<Particule?>>)
             }
         }
         else{
-                borderGestion(environnement)
+                borderGestion(environnement as Array<Array<Particule?>>)
         }
     }
 
-    override fun borderGestion(environnement: Array<Array<Agent?>>) {
+     fun borderGestion(environnement: Array<Array<Particule?>>) {
         if (!Properties.instance.torique)
             direction=direction.reverse()
         else {
@@ -56,7 +61,7 @@ class Particule(x:Int,y:Int,color: Color,direction: Direction) : Agent(x,y,color
         }
     }
 
-    override fun particleCollisionGestion(environnement: Array<Array<Agent?>>) {
+    fun particleCollisionGestion(environnement: Array<Array<Particule?>>) {
         environnement[tempX][tempY]?.direction=direction
         direction = direction.reverse()
         //println(this)

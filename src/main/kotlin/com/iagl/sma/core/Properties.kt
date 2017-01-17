@@ -1,4 +1,4 @@
-package com.iagl.sma
+package com.iagl.sma.core
 
 import org.json.JSONException
 import org.json.JSONObject
@@ -46,7 +46,7 @@ class Properties private constructor(){
 
     private object Holder { val INSTANCE = Properties() }
     companion object {
-        val instance: Properties by lazy { Properties.Holder.INSTANCE }
+        val instance: Properties by lazy { Holder.INSTANCE }
     }
         fun loadProperties(propertiesFilePath: String) {
             var file = File(propertiesFilePath)

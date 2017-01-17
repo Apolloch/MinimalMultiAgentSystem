@@ -1,5 +1,9 @@
-package com.iagl.sma
+package com.iagl.sma.particules
 
+import com.iagl.sma.core.Agent
+import com.iagl.sma.core.Properties
+import com.iagl.sma.core.SMA
+import com.iagl.sma.core.pickRandomDirection
 import java.awt.Color
 import java.security.SecureRandom
 import javax.swing.JFrame
@@ -34,7 +38,7 @@ fun main(args: Array<String>) {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     var scrollPane = JScrollPane( Vue("sma",sma) )
     frame.contentPane = scrollPane
-    frame.setSize(Properties.instance.canvasSizeX,Properties.instance.canvasSizeY)
+    frame.setSize(Properties.instance.canvasSizeX, Properties.instance.canvasSizeY)
     frame.isVisible = true
     sma.run()
 }

@@ -1,0 +1,20 @@
+{
+  "gridSizeX":50,
+  "gridSizeY":50,
+  "canvasSizeX":1000,
+  "canvasSizeY":1000,
+  "boxSize":0,
+  "delay":50,
+  "scheduling":"SEQUENTIEL",
+  "nbTicks":0,
+  "grid":true,
+  "trace":false,
+  "seed":0,
+  "refresh":100,
+  "nbShark":15,
+  "nbFish":50,
+  "sharkBreedTime":15,
+  "sharkStarveTime":5,
+  "fishBreedTime":10,
+  "torique" : false
+}

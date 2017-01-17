@@ -1,5 +1,6 @@
-package com.iagl.sma
+package com.iagl.sma.core
 
+import com.iagl.sma.core.Properties
 import java.awt.Color
 import java.security.SecureRandom
 import java.util.*
@@ -11,12 +12,11 @@ import javax.swing.JScrollPane
  */
 
 abstract class SMA(): Observable() {
-    var environnement: Array<Array<Agent?>>
+    lateinit var environnement: Array<Array<Agent?>>
     var agents = arrayListOf<Agent>()
 
     init {
         Properties.instance.loadProperties("properties.json")
-        environnement = Array<Array<Agent?>>(Properties.instance.gridSizeX, { it -> Array<Agent?>(Properties.instance.gridSizeY, { it -> null }) })
     }
 
     fun addAgent(agent: Agent) {

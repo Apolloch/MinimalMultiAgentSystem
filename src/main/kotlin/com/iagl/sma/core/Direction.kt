@@ -1,4 +1,4 @@
-package com.iagl.sma
+package com.iagl.sma.core
 
 import java.security.SecureRandom
 import java.util.*
@@ -16,22 +16,22 @@ enum class Direction(x:Int,y:Int) {
         this.y=y
     }
 
-    fun reverse() :Direction {
+    fun reverse() : Direction {
         when(this){
-            BOTTOM -> return Direction.TOP
-            LEFT -> return Direction.RIGHT
-            RIGHT -> return Direction.LEFT
-            TOP -> return Direction.BOTTOM
-            BOTTOM_LEFT -> return Direction.TOP_RIGHT
-            BOTTOM_RIGHT -> return Direction.TOP_LEFT
-            TOP_LEFT -> return Direction.BOTTOM_RIGHT
-            TOP_RIGHT -> return Direction.BOTTOM_LEFT
-            else -> return Direction.IDLE
+            BOTTOM -> return TOP
+            LEFT -> return RIGHT
+            RIGHT -> return LEFT
+            TOP -> return BOTTOM
+            BOTTOM_LEFT -> return TOP_RIGHT
+            BOTTOM_RIGHT -> return TOP_LEFT
+            TOP_LEFT -> return BOTTOM_RIGHT
+            TOP_RIGHT -> return BOTTOM_LEFT
+            else -> return IDLE
         }
     }
 }
 
-fun pickRandomDirection():Direction{
+fun pickRandomDirection(): Direction {
 when(SecureRandom().nextInt(9)){
     0 -> return Direction.TOP
     1 -> return Direction.RIGHT

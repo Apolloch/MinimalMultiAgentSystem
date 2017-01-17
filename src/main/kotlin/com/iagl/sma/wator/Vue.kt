@@ -1,5 +1,8 @@
-package com.iagl.sma
+package com.iagl.sma.wator
 
+import com.iagl.sma.core.Agent
+import com.iagl.sma.wator.Properties
+import com.iagl.sma.core.SMA
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.GridLayout
@@ -12,7 +15,7 @@ import javax.swing.JScrollPane
  * Created by Nathan on 09/01/2017.
  */
 //JPanel?
-class Vue(title:String,sma: SMA):JPanel(),Observer{
+class Vue(title:String,sma: SMA): JPanel(), Observer {
 
     var gridPanel : JPanel
     var sma : SMA
@@ -51,7 +54,7 @@ class Vue(title:String,sma: SMA):JPanel(),Observer{
 
     }
 
-    private fun drawParticules(sma: SMA,graphics: Graphics?){
+    private fun drawParticules(sma: SMA, graphics: Graphics?){
         sma.environnement.forEach {
             it.forEach {
                 if(it != null) {
@@ -61,7 +64,7 @@ class Vue(title:String,sma: SMA):JPanel(),Observer{
         }
     }
 
-    private fun  drawParticule(agent: Agent,graphics:Graphics?) {
+    private fun  drawParticule(agent: Agent, graphics: Graphics?) {
         graphics?.color = agent.color
         graphics?.fillOval(agent.x*columnStep,agent.y*lineStep,columnStep,lineStep)
     }
@@ -72,7 +75,7 @@ class Vue(title:String,sma: SMA):JPanel(),Observer{
         }
     }
 
-    private fun  updateGrid(sma: SMA,graphics: Graphics?) {
+    private fun  updateGrid(sma: SMA, graphics: Graphics?) {
         drawGrid(graphics)
         drawParticules(sma,graphics)
     }
