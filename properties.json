@@ -11,6 +11,6 @@
   "trace":false,
   "seed":0,
   "refresh":100,
-  "nbParticles":50000,
+  "nbParticles":15000,
   "torique" : true
 }

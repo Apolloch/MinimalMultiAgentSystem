@@ -39,7 +39,7 @@ class Vue(title:String,sma: SMA):JPanel(),Observer{
     }
 
     private fun drawGrid(graphics: Graphics?) {
-        if(sma.properties.grid) {
+        if(Properties.instance.grid) {
             graphics?.color = Color.BLACK
             for (i in 1..nbColumns) {
                 graphics?.drawLine(columnStep * i, 0, columnStep * i, nbLines * lineStep)
@@ -79,8 +79,3 @@ class Vue(title:String,sma: SMA):JPanel(),Observer{
 
 }
 
-fun main(args: Array<String>) {
-    val sma = SMA()
-    Vue("coucou", sma)
-    sma.addAgent(Agent(9,9, Color.RED))
-}
