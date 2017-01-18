@@ -10,18 +10,18 @@ import java.security.SecureRandom
 /**
  * Created by bacquet on 17/01/17.
  */
-class Shark(x:Int, y:Int) : Agent(x,y, Color.BLACK) {
+class Shark(x:Int, y:Int) : Agent(x,y, Color.PINK) {
     private var tempX =0
     private var tempY =0
     private var direction = Direction.IDLE
-    var breedTime : Int
+    var time: Int
     var moved : Boolean
     var starveTime : Int
     var oldX : Int
     var oldY : Int
     init {
         moved = false
-        breedTime = 0
+        time = SecureRandom().nextInt(6)
         starveTime = 0
         oldX = x
         oldY = y
@@ -29,15 +29,18 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.BLACK) {
     }
 
     override fun decide(environnement: Array<Array<Agent?>>) {
-        breedTime++
+        time++
         starveTime++
+        time++
+        if(time>5)
+            this.color = Color.RED
         if(seekAndDestroy(environnement)){
             moved = true
         }
         else if(tryToMove(environnement)){
             moved = true
         }
-        if(moved && breedTime%Properties.instance.sharkBreedTime==0 ){
+        if(moved && time %Properties.instance.sharkBreedTime==0 ){
             reproduce(environnement)
         }
         if(starveTime==Properties.instance.sharkStarveTime) {
@@ -48,8 +51,6 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.BLACK) {
     }
 
     private fun reproduce(environnement: Array<Array<Agent?>>) {
-        if(Properties.instance.trace)
-            println(this)
         val child = Shark(oldX,oldY)
         Main.instance.addAgent(child)
     }
@@ -77,7 +78,7 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.BLACK) {
                         tempY = tempY % environnement[0].size
                     }
                 }
-                breedTime = (breedTime + 1) % Properties.instance.sharkBreedTime
+                time = (time + 1) % Properties.instance.sharkBreedTime
                 if (tempX >= 0 && tempX < environnement.size && tempY >= 0 && tempY < environnement[0].size) {
                     if (environnement[tempX][tempY] == null) {
                         environnement[x][y] = null
@@ -103,7 +104,7 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.BLACK) {
         allDirection.addAll(Direction.values())
         var randomgen =SecureRandom()
         while (allDirection.size!=0){
-            val direction = allDirection.get(randomgen.nextInt(allDirection.size))
+            var direction = allDirection.get(randomgen.nextInt(allDirection.size))
             tempX=x+direction.x
             tempY=y+direction.y
             if(Properties.instance.torique ) {
@@ -145,6 +146,6 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.BLACK) {
 
 
         override fun toString(): String {
-        return "Agent,$color,$x,$y,$direction,$breedTime,$starveTime"
+        return "Shark,$color,$x,$y,$direction,$time,$starveTime"
     }
 }

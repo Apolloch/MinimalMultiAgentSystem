@@ -4,11 +4,11 @@
   "canvasSizeX":1000,
   "canvasSizeY":1000,
   "boxSize":0,
-  "delay":1000,
+  "delay":60,
   "scheduling":"SEQUENTIEL",
   "nbTicks":0,
-  "grid":true,
-  "trace":true,
+  "grid":false,
+  "trace":false,
   "seed":0,
   "refresh":1000,
   "nbShark":150,
@@ -16,5 +16,5 @@
   "sharkBreedTime":20,
   "sharkStarveTime":10,
   "fishBreedTime":15,
-  "torique" : true
+  "torique" : false
 }

@@ -14,23 +14,23 @@ import javax.swing.JScrollPane
 abstract class SMA(): Observable() {
     lateinit var environnement: Array<Array<Agent?>>
     var agents = arrayListOf<Agent>()
-    private var diedAgents= arrayListOf<Agent>()
+     var diedAgents= arrayListOf<Agent>()
 
     init {
         Properties.instance.loadProperties("properties.json")
     }
 
-    fun addAgent(agent: Agent) {
+    open fun addAgent(agent: Agent) {
         agents.add(agent)
         environnement[agent.x][agent.y] = agent
     }
 
-    fun removeAgent(agent: Agent) {
+    open fun removeAgent(agent: Agent) {
         diedAgents.add(agent)
         environnement[agent.x][agent.y] = null
     }
 
-    fun run() {
+    open fun run() {
         init()
         var iterationCount = 0
         while (Properties.instance.nbTicks == 0 || iterationCount < Properties.instance.nbTicks) {

@@ -13,12 +13,35 @@ import javax.swing.JScrollPane
  * Created by bacquet on 17/01/17.
  */
 class Main private constructor(): SMA(){
+    private var fishCount : Int
+    private var sharkCount : Int
     companion object {
         val instance : Main by lazy { Main() }
     }
     init {
         environnement = Array<Array<Agent?>>(Properties.instance.gridSizeX, { it -> Array<Agent?>(Properties.instance.gridSizeY, { it -> null }) })
+        fishCount = 0
+        sharkCount = 0
+    }
 
+    override fun addAgent(agent: Agent) {
+        super.addAgent(agent)
+        if(agent is Fish)
+            fishCount++
+        else
+            sharkCount++
+        if(Properties.instance.trace)
+            println(agent)
+    }
+
+    override fun removeAgent(agent: Agent) {
+        super.removeAgent(agent)
+        if(agent is Fish)
+            fishCount--
+        else
+            sharkCount--
+        if(Properties.instance.trace)
+            println(agent)
     }
     override fun init(){
         var sharkCount = 0
@@ -46,6 +69,26 @@ class Main private constructor(): SMA(){
             }
         }
     }
+    override fun run() {
+        init()
+        var iterationCount = 0
+        while (Properties.instance.nbTicks == 0 || iterationCount < Properties.instance.nbTicks) {
+
+            for(i in 0..agents.size-1){
+                if(!diedAgents.contains(agents.get(i)))
+                    agents.get(i).decide(environnement)
+            }
+            diedAgents.forEach { agents.remove(it) }
+            diedAgents.clear()
+            Thread.sleep(Properties.instance.delay.toLong())
+            if (Properties.instance.trace)
+                println("Tick,$iterationCount,$fishCount,$sharkCount")
+            iterationCount++
+            setChanged()
+            notifyObservers()
+        }
+    }
+
 }
 
 fun main(args: Array<String>) {

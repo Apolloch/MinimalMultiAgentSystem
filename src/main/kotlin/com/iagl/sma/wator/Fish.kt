@@ -11,34 +11,34 @@ import java.security.SecureRandom
 /**
  * Created by bacquet on 17/01/17.
  */
-class Fish(x:Int, y:Int) : Agent(x,y,Color.BLUE) {
+class Fish(x:Int, y:Int) : Agent(x,y,Color.GREEN) {
     private var tempX =0
     private var tempY =0
     private var oldX : Int
     private var oldY : Int
     private var direction = Direction.IDLE
-    var breedTime : Int
+    var time: Int
     var moved : Boolean
 
     init {
         oldY=y
         oldX=x
         moved = false
-        breedTime = Properties.instance.fishBreedTime
+        time = SecureRandom().nextInt(6)
     }
     override fun decide(environnement: Array<Array<Agent?>>) {
-        breedTime++
+        time++
+        if(time>5)
+            this.color = Color.BLUE
         if (tryToMove(environnement)){
             moved = true
         }
-        if(moved && breedTime%Properties.instance.fishBreedTime==0 ){
+        if(moved && time %Properties.instance.fishBreedTime==0 ){
             reproduce(environnement)
         }
         moved = false
     }
     private fun reproduce(environnement: Array<Array<Agent?>>) {
-        if(Properties.instance.trace)
-            println(this)
         val child = Fish(oldX,oldY)
         Main.instance.addAgent(child)
     }
@@ -84,7 +84,7 @@ class Fish(x:Int, y:Int) : Agent(x,y,Color.BLUE) {
     }
 
     override fun toString(): String {
-        return "Agent,$color,$x,$y,$direction"
+        return "Fish,$color,$x,$y,$direction,$time"
     }
 }
 /**
