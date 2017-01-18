@@ -38,19 +38,18 @@ class Particule(x:Int, y:Int, color: Color, var direction: Direction) : Agent(x,
      fun borderGestion(environnement: Array<Array<Particule?>>) {
         if (!Properties.instance.torique)
             direction=direction.reverse()
-        else {
-
-            if (tempX > environnement.size - 1 )
-                tempX = 0
-            else if(tempX<0)
-                tempX = environnement.size - 1
-
-            if (tempY > environnement[0].size - 1)
-                tempY = 0
-            else if(tempY<0)
-                tempY = environnement[0].size - 1
-            println("x=$x,y=$y,tempx = $tempX , tempy = $tempY")
-            if (environnement[tempX][tempY] == null) {
+         if(Properties.instance.torique ) {
+             if (tempX < 0) {
+                 tempX = environnement.size + direction.x
+             } else {
+                 tempX = tempX % environnement.size;
+             }
+             if (tempY < 0) {
+                 tempY = environnement.size + direction.y
+             } else {
+                 tempY = tempY % environnement[0].size
+             }
+         if (environnement[tempX][tempY] == null) {
                 environnement[x][y] = null
                 x = tempX
                 y = tempY

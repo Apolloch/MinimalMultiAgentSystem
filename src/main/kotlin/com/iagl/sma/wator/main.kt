@@ -12,7 +12,10 @@ import javax.swing.JScrollPane
 /**
  * Created by bacquet on 17/01/17.
  */
-class Main : SMA(){
+class Main private constructor(): SMA(){
+    companion object {
+        val instance : Main by lazy { Main() }
+    }
     init {
         environnement = Array<Array<Agent?>>(Properties.instance.gridSizeX, { it -> Array<Agent?>(Properties.instance.gridSizeY, { it -> null }) })
 
@@ -46,7 +49,7 @@ class Main : SMA(){
 }
 
 fun main(args: Array<String>) {
-    var sma = Main()
+    var sma = Main.instance
     var frame = JFrame("sma")
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     var scrollPane = JScrollPane( Vue("sma",sma) )

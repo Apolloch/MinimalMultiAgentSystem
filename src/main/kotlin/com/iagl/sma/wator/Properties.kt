@@ -41,7 +41,7 @@ class Properties private constructor(){
             scheduling = Schedule.SEQUENTIEL
             nbTicks = 10
             grid = true
-            trace = true
+            trace = false
             seed = 0
             refresh = 10
             nbShark= 2

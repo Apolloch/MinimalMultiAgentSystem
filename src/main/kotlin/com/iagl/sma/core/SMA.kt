@@ -14,6 +14,7 @@ import javax.swing.JScrollPane
 abstract class SMA(): Observable() {
     lateinit var environnement: Array<Array<Agent?>>
     var agents = arrayListOf<Agent>()
+    private var diedAgents= arrayListOf<Agent>()
 
     init {
         Properties.instance.loadProperties("properties.json")
@@ -24,11 +25,22 @@ abstract class SMA(): Observable() {
         environnement[agent.x][agent.y] = agent
     }
 
+    fun removeAgent(agent: Agent) {
+        diedAgents.add(agent)
+        environnement[agent.x][agent.y] = null
+    }
+
     fun run() {
         init()
         var iterationCount = 0
         while (Properties.instance.nbTicks == 0 || iterationCount < Properties.instance.nbTicks) {
-            agents.forEach { it.decide(environnement) }
+
+            for(i in 0..agents.size-1){
+                if(!diedAgents.contains(agents.get(i)))
+                    agents.get(i).decide(environnement)
+            }
+            diedAgents.forEach { agents.remove(it) }
+            diedAgents.clear()
             Thread.sleep(Properties.instance.delay.toLong())
             if (Properties.instance.trace)
                 println("Tick")

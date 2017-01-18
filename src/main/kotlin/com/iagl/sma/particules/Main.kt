@@ -12,13 +12,23 @@ import javax.swing.JScrollPane
 /**
  * Created by bacquet on 17/01/17.
  */
-class ParticulesSim : SMA(){
+class Main : SMA(){
 
+    /**
+     * Created by bacquet on 17/01/17.
+     */
+        companion object {
+            val instance : Main by lazy { Main() }
+        }
+        init {
+            environnement = Array<Array<Agent?>>(Properties.instance.gridSizeX, { it -> Array<Agent?>(Properties.instance.gridSizeY, { it -> null }) })
+
+        }
     override fun init(){
         var agentCount = 0
         var x : Int
         var y : Int
-        var agent : Agent
+        var agent : Particule
         var randomGenerator = SecureRandom()
         while (agentCount < Properties.instance.nbParticles){
             x = randomGenerator.nextInt(Properties.instance.gridSizeX)
@@ -33,7 +43,7 @@ class ParticulesSim : SMA(){
 }
 
 fun main(args: Array<String>) {
-    var sma = ParticulesSim()
+    var sma = Main()
     var frame = JFrame("sma")
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     var scrollPane = JScrollPane( Vue("sma",sma) )

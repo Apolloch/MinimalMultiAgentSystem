@@ -5,6 +5,7 @@ import com.iagl.sma.core.Direction
 import com.iagl.sma.core.pickRandomDirection
 import com.iagl.sma.wator.Properties
 import java.awt.Color
+import java.security.SecureRandom
 
 
 /**
@@ -13,65 +14,73 @@ import java.awt.Color
 class Fish(x:Int, y:Int) : Agent(x,y,Color.BLUE) {
     private var tempX =0
     private var tempY =0
+    private var oldX : Int
+    private var oldY : Int
     private var direction = Direction.IDLE
     var breedTime : Int
-    var alive : Boolean
     var moved : Boolean
 
     init {
+        oldY=y
+        oldX=x
         moved = false
-        alive = true
         breedTime = Properties.instance.fishBreedTime
     }
     override fun decide(environnement: Array<Array<Agent?>>) {
-
-        direction= pickRandomDirection()
-        tempX = x+direction.x
-        tempY = y+direction.y
-        breedTime= (breedTime+1)%Properties.instance.fishBreedTime
-        if(tempX >= 0 && tempX<environnement.size && tempY >= 0 && tempY<environnement[0].size){
-            if(environnement[tempX][tempY] == null){
-                environnement[x][y]=null
-                x = tempX
-                y=tempY
-                environnement[tempX][tempY]=this
-            }
-            else{
-                particleCollisionGestion(environnement)
-            }
+        breedTime++
+        if (tryToMove(environnement)){
+            moved = true
         }
-        else{
-            borderGestion(environnement)
+        if(moved && breedTime%Properties.instance.fishBreedTime==0 ){
+            reproduce(environnement)
         }
+        moved = false
+    }
+    private fun reproduce(environnement: Array<Array<Agent?>>) {
+        if(Properties.instance.trace)
+            println(this)
+        val child = Fish(oldX,oldY)
+        Main.instance.addAgent(child)
     }
 
-    fun borderGestion(environnement:Array<Array<Agent?>>) {
-        if (!Properties.instance.torique)
-            direction=direction.reverse()
-        else {
+    private fun tryToMove(environnement: Array<Array<Agent?>>):Boolean{
+        var allDirection = arrayListOf<Direction>()
+        allDirection.addAll(Direction.values())
+        var randomgen = SecureRandom()
 
-            if (tempX > environnement.size - 1 )
-                tempX = 0
-            else if(tempX<0)
-                tempX = environnement.size - 1
+        while (allDirection.size!=0){
+            direction = allDirection.get(randomgen.nextInt(allDirection.size))
+            if(direction!=Direction.IDLE) {
+                tempX = x + direction.x
+                tempY = y + direction.y
 
-            if (tempY > environnement[0].size - 1)
-                tempY = 0
-            else if(tempY<0)
-                tempY = environnement[0].size - 1
-            println("x=$x,y=$y,tempx = $tempX , tempy = $tempY")
-            if (environnement[tempX][tempY] == null) {
-                environnement[x][y] = null
-                x = tempX
-                y = tempY
-                environnement[tempX][tempY] = this
-            } else {
-                particleCollisionGestion(environnement)
+                if(Properties.instance.torique ) {
+                    if (tempX < 0) {
+                        tempX = environnement.size + direction.x
+                    } else {
+                        tempX = tempX % environnement.size;
+                    }
+                    if (tempY < 0) {
+                        tempY = environnement.size + direction.y
+                    } else {
+                        tempY = tempY % environnement[0].size
+                    }
+                }
+                if (tempX >= 0 && tempX < environnement.size && tempY >= 0 && tempY < environnement[0].size) {
+                    if (environnement[tempX][tempY] == null) {
+                        environnement[x][y] = null
+                        oldX = x
+                        oldY = y
+                        x = tempX
+                        y = tempY
+                        environnement[tempX][tempY] = this
+                        return true
+                    }
+                }
             }
+            allDirection.remove(direction)
         }
-    }
-
-    fun particleCollisionGestion(environnement: Array<Array<Agent?>>) {
+        return false
     }
 
     override fun toString(): String {
