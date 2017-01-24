@@ -54,7 +54,7 @@ class Main : SMA() {
             x = randomGenerator.nextInt(PropertiesAvatar.INSTANCE.gridSizeX)
             y = randomGenerator.nextInt(PropertiesAvatar.INSTANCE.gridSizeY)
             if(environnement[x][y]==null){
-                avatar = Avatar(x,y)
+                avatar = Avatar(x,y,dValues)
                 addAgent(avatar)
                 placed = true
             }

@@ -31,20 +31,24 @@ enum class Direction(x:Int,y:Int) {
     }
 }
 
-fun pickRandomDirection(): Direction {
-when(SecureRandom().nextInt(9)){
-    0 -> return Direction.TOP
-    1 -> return Direction.RIGHT
-    2 -> return Direction.LEFT
-    3 -> return Direction.BOTTOM
-    4 -> return Direction.TOP_RIGHT
-    5 -> return Direction.TOP_LEFT
-    6 -> return Direction.BOTTOM_RIGHT
-    7 -> return Direction.BOTTOM_LEFT
-    else -> return Direction.IDLE
-}
-}
 
+
+fun pickRandomDirection(): Direction {
+    when(SecureRandom().nextInt(9)){
+        0 -> return Direction.TOP
+        1 -> return Direction.RIGHT
+        2 -> return Direction.LEFT
+        3 -> return Direction.BOTTOM
+        4 -> return Direction.TOP_RIGHT
+        5 -> return Direction.TOP_LEFT
+        6 -> return Direction.BOTTOM_RIGHT
+        7 -> return Direction.BOTTOM_LEFT
+        else -> return Direction.IDLE
+    }
+}
+fun vonNeumanNeighbourhood():Array<Direction>{
+    return arrayOf(Direction.TOP,Direction.BOTTOM,Direction.LEFT,Direction.RIGHT)
+}
 fun main(args: Array<String>) {
     for (i in 0..7)
         println(pickRandomDirection())

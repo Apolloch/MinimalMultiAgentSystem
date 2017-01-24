@@ -1,9 +1,9 @@
 {
-  "gridSizeX":30,
-  "gridSizeY":30,
+  "gridSizeX":10,
+  "gridSizeY":10,
   "canvasSizeX":500,
   "canvasSizeY":500,
-  "delay":100,
+  "delay":10000,
   "nbTicks":0,
   "grid":false,
   "trace":false,
