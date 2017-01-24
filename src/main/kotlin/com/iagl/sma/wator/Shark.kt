@@ -3,7 +3,7 @@ package com.iagl.sma.wator
 import com.iagl.sma.core.Agent
 import com.iagl.sma.core.Direction
 import com.iagl.sma.core.pickRandomDirection
-import com.iagl.sma.wator.Properties
+import com.iagl.sma.wator.PropertiesWator
 import java.awt.Color
 import java.security.SecureRandom
 
@@ -11,14 +11,16 @@ import java.security.SecureRandom
  * Created by bacquet on 17/01/17.
  */
 class Shark(x:Int, y:Int) : Agent(x,y, Color.PINK) {
-    private var tempX =0
-    private var tempY =0
-    private var direction = Direction.IDLE
     var time: Int
     var moved : Boolean
     var starveTime : Int
-    var oldX : Int
-    var oldY : Int
+
+    private var oldX : Int
+    private var oldY : Int
+    private var tempX =0
+    private var tempY =0
+    private var direction = Direction.IDLE
+
     init {
         moved = false
         time = SecureRandom().nextInt(6)
@@ -40,10 +42,10 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.PINK) {
         else if(tryToMove(environnement)){
             moved = true
         }
-        if(moved && time %Properties.instance.sharkBreedTime==0 ){
+        if(moved && time % PropertiesWator.INSTANCE.sharkBreedTime==0 ){
             reproduce(environnement)
         }
-        if(starveTime==Properties.instance.sharkStarveTime) {
+        if(starveTime== PropertiesWator.INSTANCE.sharkStarveTime) {
             Main.instance.removeAgent(this)
         }
         moved = false
@@ -66,7 +68,7 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.PINK) {
                 tempX = x + direction.x
                 tempY = y + direction.y
 
-                if(Properties.instance.torique ) {
+                if(PropertiesWator.INSTANCE.torique ) {
                     if (tempX < 0) {
                         tempX = environnement.size + direction.x
                     } else {
@@ -78,7 +80,7 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.PINK) {
                         tempY = tempY % environnement[0].size
                     }
                 }
-                time = (time + 1) % Properties.instance.sharkBreedTime
+                time = (time + 1) % PropertiesWator.INSTANCE.sharkBreedTime
                 if (tempX >= 0 && tempX < environnement.size && tempY >= 0 && tempY < environnement[0].size) {
                     if (environnement[tempX][tempY] == null) {
                         environnement[x][y] = null
@@ -107,7 +109,7 @@ class Shark(x:Int, y:Int) : Agent(x,y, Color.PINK) {
             var direction = allDirection.get(randomgen.nextInt(allDirection.size))
             tempX=x+direction.x
             tempY=y+direction.y
-            if(Properties.instance.torique ) {
+            if(PropertiesWator.INSTANCE.torique ) {
                 if (tempX < 0) {
                     tempX = environnement.size + direction.x
                 } else {

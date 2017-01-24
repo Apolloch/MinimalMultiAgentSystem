@@ -1,0 +1,16 @@
+{
+  "gridSizeX":30,
+  "gridSizeY":30,
+  "canvasSizeX":500,
+  "canvasSizeY":500,
+  "delay":100,
+  "nbTicks":0,
+  "grid":false,
+  "trace":false,
+  "torique" : true,
+  "wallPercent":10,
+  "nbHunter" : 1,
+  "speedAvatar":1,
+  "speedHunter":1,
+  "defenderLife":1
+}

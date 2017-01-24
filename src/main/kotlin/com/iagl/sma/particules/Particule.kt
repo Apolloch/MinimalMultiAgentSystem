@@ -3,6 +3,7 @@ package com.iagl.sma.particules
 import com.iagl.sma.core.Agent
 import com.iagl.sma.core.Direction
 import com.iagl.sma.core.Properties
+import com.iagl.sma.particules.PropertiesParticules
 import java.awt.Color
 
 /**
@@ -36,9 +37,9 @@ class Particule(x:Int, y:Int, color: Color, var direction: Direction) : Agent(x,
     }
 
      fun borderGestion(environnement: Array<Array<Particule?>>) {
-        if (!Properties.instance.torique)
+        if (!PropertiesParticules.INSTANCE.torique)
             direction=direction.reverse()
-         if(Properties.instance.torique ) {
+         if(PropertiesParticules.INSTANCE.torique ) {
              if (tempX < 0) {
                  tempX = environnement.size + direction.x
              } else {

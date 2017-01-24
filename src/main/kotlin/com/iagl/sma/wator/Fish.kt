@@ -3,7 +3,7 @@ package com.iagl.sma.wator
 import com.iagl.sma.core.Agent
 import com.iagl.sma.core.Direction
 import com.iagl.sma.core.pickRandomDirection
-import com.iagl.sma.wator.Properties
+import com.iagl.sma.wator.PropertiesWator
 import java.awt.Color
 import java.security.SecureRandom
 
@@ -33,7 +33,7 @@ class Fish(x:Int, y:Int) : Agent(x,y,Color.GREEN) {
         if (tryToMove(environnement)){
             moved = true
         }
-        if(moved && time %Properties.instance.fishBreedTime==0 ){
+        if(moved && time % PropertiesWator.INSTANCE.fishBreedTime==0 ){
             reproduce(environnement)
         }
         moved = false
@@ -54,7 +54,7 @@ class Fish(x:Int, y:Int) : Agent(x,y,Color.GREEN) {
                 tempX = x + direction.x
                 tempY = y + direction.y
 
-                if(Properties.instance.torique ) {
+                if(PropertiesWator.INSTANCE.torique ) {
                     if (tempX < 0) {
                         tempX = environnement.size + direction.x
                     } else {

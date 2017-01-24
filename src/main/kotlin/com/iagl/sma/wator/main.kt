@@ -3,7 +3,7 @@ package com.iagl.sma.wator
 import com.iagl.sma.core.Agent
 import com.iagl.sma.core.SMA
 import com.iagl.sma.core.pickRandomDirection
-import com.iagl.sma.wator.Properties
+import com.iagl.sma.wator.PropertiesWator
 import java.awt.Color
 import java.security.SecureRandom
 import javax.swing.JFrame
@@ -19,7 +19,7 @@ class Main private constructor(): SMA(){
         val instance : Main by lazy { Main() }
     }
     init {
-        environnement = Array<Array<Agent?>>(Properties.instance.gridSizeX, { it -> Array<Agent?>(Properties.instance.gridSizeY, { it -> null }) })
+        environnement = Array<Array<Agent?>>(PropertiesWator.INSTANCE.gridSizeX, { it -> Array<Agent?>(PropertiesWator.INSTANCE.gridSizeY, { it -> null }) })
         fishCount = 0
         sharkCount = 0
     }
@@ -30,7 +30,7 @@ class Main private constructor(): SMA(){
             fishCount++
         else
             sharkCount++
-        if(Properties.instance.trace)
+        if(PropertiesWator.INSTANCE.trace)
             println(agent)
     }
 
@@ -40,7 +40,7 @@ class Main private constructor(): SMA(){
             fishCount--
         else
             sharkCount--
-        if(Properties.instance.trace)
+        if(PropertiesWator.INSTANCE.trace)
             println(agent)
     }
     override fun init(){
@@ -50,18 +50,18 @@ class Main private constructor(): SMA(){
         var y : Int
         var agent : Agent
         var randomGenerator = SecureRandom()
-        while (sharkCount< Properties.instance.nbShark){
-            x = randomGenerator.nextInt(Properties.instance.gridSizeX)
-            y = randomGenerator.nextInt(Properties.instance.gridSizeY)
+        while (sharkCount< PropertiesWator.INSTANCE.nbShark){
+            x = randomGenerator.nextInt(PropertiesWator.INSTANCE.gridSizeX)
+            y = randomGenerator.nextInt(PropertiesWator.INSTANCE.gridSizeY)
             if(environnement[x][y]==null){
                 agent = Shark(x,y)
                 addAgent(agent)
                 sharkCount++
             }
         }
-        while (fishCount< Properties.instance.nbFish){
-            x = randomGenerator.nextInt(Properties.instance.gridSizeX)
-            y = randomGenerator.nextInt(Properties.instance.gridSizeY)
+        while (fishCount< PropertiesWator.INSTANCE.nbFish){
+            x = randomGenerator.nextInt(PropertiesWator.INSTANCE.gridSizeX)
+            y = randomGenerator.nextInt(PropertiesWator.INSTANCE.gridSizeY)
             if(environnement[x][y]==null){
                 agent = Fish(x,y)
                 addAgent(agent)
@@ -72,7 +72,7 @@ class Main private constructor(): SMA(){
     override fun run() {
         init()
         var iterationCount = 0
-        while (Properties.instance.nbTicks == 0 || iterationCount < Properties.instance.nbTicks) {
+        while (PropertiesWator.INSTANCE.nbTicks == 0 || iterationCount < PropertiesWator.INSTANCE.nbTicks) {
 
             for(i in 0..agents.size-1){
                 if(!diedAgents.contains(agents.get(i)))
@@ -80,8 +80,8 @@ class Main private constructor(): SMA(){
             }
             diedAgents.forEach { agents.remove(it) }
             diedAgents.clear()
-            Thread.sleep(Properties.instance.delay.toLong())
-            if (Properties.instance.trace)
+            Thread.sleep(PropertiesWator.INSTANCE.delay.toLong())
+            if (PropertiesWator.INSTANCE.trace)
                 println("Tick,$iterationCount,$fishCount,$sharkCount")
             iterationCount++
             setChanged()
@@ -97,7 +97,7 @@ fun main(args: Array<String>) {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     var scrollPane = JScrollPane( Vue("sma",sma) )
     frame.contentPane = scrollPane
-    frame.setSize(Properties.instance.canvasSizeX, Properties.instance.canvasSizeY)
+    frame.setSize(PropertiesWator.INSTANCE.canvasSizeX, PropertiesWator.INSTANCE.canvasSizeY)
     frame.isVisible = true
     sma.run()
 }

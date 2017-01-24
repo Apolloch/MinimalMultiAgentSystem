@@ -8,68 +8,36 @@ import java.io.FileNotFoundException
 /**
  * Created by Nathan on 10/01/2017.
  */
-class Properties private constructor(){
-        private val defaultPropertiesFile = "properties.json"
+abstract class Properties (){
 
-    var gridSizeX: Int
-    var gridSizeY: Int
-    var canvasSizeX: Int
-    var canvasSizeY: Int
-    var boxSize: Int
-    var delay: Int
-    var scheduling: Schedule
-    var nbTicks: Int
-    var grid: Boolean
-    var trace: Boolean
-    var seed: Int
-    var refresh: Int
-    var nbParticles: Int
-    var torique: Boolean
+    abstract var gridSizeX: Int
+    abstract var gridSizeY: Int
+    abstract var canvasSizeX: Int
+    abstract var canvasSizeY: Int
+    abstract var delay: Int
+    abstract var nbTicks: Int
+    abstract var grid: Boolean
+    abstract var trace: Boolean
+    abstract var torique: Boolean
 
-    init {
-            gridSizeX = 100
-            gridSizeY = 100
-            canvasSizeX = 500
-            canvasSizeY = 500
-            boxSize = 100
-            delay = 50
-            scheduling = Schedule.SEQUENTIEL
-            nbTicks = 10
-            grid = true
-            trace = true
-            seed = 0
-            refresh = 10
-            nbParticles = 10
-            torique = false
-            loadProperties(defaultPropertiesFile)
-        }
 
-    private object Holder { val INSTANCE = Properties() }
-    companion object {
-        val instance: Properties by lazy { Holder.INSTANCE }
-    }
-        fun loadProperties(propertiesFilePath: String) {
+        open fun loadProperties(propertiesFilePath: String):JSONObject {
             var file = File(propertiesFilePath)
-
+            var propertiesJson: JSONObject
             if (file.exists()) {
                 var content = ""
                 file.forEachLine { content += it }
-                var propertiesJson = JSONObject(content)
+                propertiesJson = JSONObject(content)
                 try {
 
                     gridSizeX = propertiesJson.getInt("gridSizeX")
                     gridSizeY = propertiesJson.getInt("gridSizeY")
                     canvasSizeX = propertiesJson.getInt("canvasSizeX")
                     canvasSizeY = propertiesJson.getInt("canvasSizeY")
-                    boxSize = propertiesJson.getInt("boxSize")
                     delay = propertiesJson.getInt("delay")
-                    scheduling = Schedule.valueOf(propertiesJson.getString("scheduling"))
                     nbTicks = propertiesJson.getInt("nbTicks")
                     grid = propertiesJson.getBoolean("grid")
                     trace = propertiesJson.getBoolean("trace")
-                    seed = propertiesJson.getInt("seed")
-                    refresh = propertiesJson.getInt("refresh")
-                    nbParticles = propertiesJson.getInt("nbParticles")
                     torique = propertiesJson.getBoolean("torique")
 
                 } catch (e: JSONException) {
@@ -78,7 +46,7 @@ class Properties private constructor(){
             } else {
                 throw FileNotFoundException("properties file not found")
             }
-
+            return propertiesJson
         }
 
 }

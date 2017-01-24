@@ -14,7 +14,6 @@ import javax.swing.JScrollPane
 /**
  * Created by Nathan on 09/01/2017.
  */
-//JPanel?
 class Vue(title:String,sma: SMA): JPanel(), Observer {
 
     var gridPanel : JPanel
@@ -42,7 +41,7 @@ class Vue(title:String,sma: SMA): JPanel(), Observer {
     }
 
     private fun drawGrid(graphics: Graphics?) {
-        if(Properties.instance.grid) {
+        if(PropertiesParticules.INSTANCE.grid) {
             graphics?.color = Color.BLACK
             for (i in 1..nbColumns) {
                 graphics?.drawLine(columnStep * i, 0, columnStep * i, nbLines * lineStep)

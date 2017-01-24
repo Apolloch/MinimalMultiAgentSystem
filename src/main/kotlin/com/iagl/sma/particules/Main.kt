@@ -21,7 +21,8 @@ class Main : SMA(){
             val instance : Main by lazy { Main() }
         }
         init {
-            environnement = Array<Array<Agent?>>(Properties.instance.gridSizeX, { it -> Array<Agent?>(Properties.instance.gridSizeY, { it -> null }) })
+            properties = PropertiesParticules.INSTANCE
+            environnement = Array<Array<Agent?>>(properties.gridSizeX, { it -> Array<Agent?>(properties.gridSizeY, { it -> null }) })
 
         }
     override fun init(){
@@ -30,9 +31,9 @@ class Main : SMA(){
         var y : Int
         var agent : Particule
         var randomGenerator = SecureRandom()
-        while (agentCount < Properties.instance.nbParticles){
-            x = randomGenerator.nextInt(Properties.instance.gridSizeX)
-            y = randomGenerator.nextInt(Properties.instance.gridSizeY)
+        while (agentCount < (properties as PropertiesParticules).nbParticules){
+            x = randomGenerator.nextInt(properties.gridSizeX)
+            y = randomGenerator.nextInt(properties.gridSizeY)
             if(environnement[x][y]==null){
                 agent = Particule(x,y, Color((Math.random() * 0x1000000).toInt()).brighter() , pickRandomDirection())
                 addAgent(agent)
@@ -48,7 +49,7 @@ fun main(args: Array<String>) {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     var scrollPane = JScrollPane( Vue("sma",sma) )
     frame.contentPane = scrollPane
-    frame.setSize(Properties.instance.canvasSizeX, Properties.instance.canvasSizeY)
+    frame.setSize(PropertiesParticules.INSTANCE.canvasSizeX, PropertiesParticules.INSTANCE.canvasSizeY)
     frame.isVisible = true
     sma.run()
 }
