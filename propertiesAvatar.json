@@ -7,7 +7,7 @@
   "nbTicks":0,
   "grid":false,
   "trace":false,
-  "torique" : true,
+  "torique" : false,
   "wallPercent":10,
   "nbHunter" : 1,
   "speedAvatar":1,
