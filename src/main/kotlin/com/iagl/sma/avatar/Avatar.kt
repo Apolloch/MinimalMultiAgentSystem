@@ -4,13 +4,15 @@ import com.iagl.sma.core.Agent
 import com.iagl.sma.core.Direction
 import com.iagl.sma.core.vonNeumanNeighbourhood
 import java.awt.Color
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 import java.util.*
 
 /**
  * Created by Apolloch on 20/01/2017.
  */
 
-class Avatar(x :Int , y : Int, val dValues : Array<Array<Int>>):Agent(x,y, Color.BLUE) {
+class Avatar(x :Int , y : Int, val dValues : Array<Array<Int>>):Agent(x,y, Color.BLUE),KeyListener {
     var age: Int
     var direction: Direction
     private var tempY: Int
@@ -99,13 +101,13 @@ class Avatar(x :Int , y : Int, val dValues : Array<Array<Int>>):Agent(x,y, Color
         }
 
 
-        println()
-        for (i in 0..dValues[0].size - 1) {
-            println()
-            for (j in 0..dValues.size - 1) {
-                print("${dValues[j][i]} ")
-            }
-        }
+//        println()
+//        for (i in 0..dValues[0].size - 1) {
+//            println()
+//            for (j in 0..dValues.size - 1) {
+//                print("${dValues[j][i]} ")
+//            }
+//        }
     }
 
     private fun calcNeibourhood(environnement: Array<Array<Agent?>>, nodeX: Int, nodeY: Int): ArrayList<Pair<Int, Int>> {
@@ -127,4 +129,26 @@ class Avatar(x :Int , y : Int, val dValues : Array<Array<Int>>):Agent(x,y, Color
         }
         return toExploreNodes
     }
+
+    override fun keyPressed(e: KeyEvent?) {
+        var direction : Direction
+        println(KeyEvent.getKeyText(e!!.keyCode))
+        when(e!!.keyCode){
+            KeyEvent.VK_LEFT -> direction = Direction.LEFT
+            KeyEvent.VK_RIGHT-> direction = Direction.RIGHT
+            KeyEvent.VK_UP -> direction = Direction.TOP
+            KeyEvent.VK_DOWN -> direction = Direction.BOTTOM
+            else -> direction = this.direction
+        }
+
+        this.direction = direction
+    }
+
+    override fun keyReleased(e: KeyEvent?) {
+    }
+
+    override fun keyTyped(e: KeyEvent?) {
+        println(KeyEvent.getKeyText(e!!.keyCode))
+    }
+
 }

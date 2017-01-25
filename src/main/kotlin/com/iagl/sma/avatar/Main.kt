@@ -42,7 +42,7 @@ class Main : SMA() {
             x = randomGenerator.nextInt(PropertiesAvatar.INSTANCE.gridSizeX)
             y = randomGenerator.nextInt(PropertiesAvatar.INSTANCE.gridSizeY)
             if(environnement[x][y]==null){
-                agent = Hunter(x,y)
+                agent = Hunter(x,y,dValues)
                 addAgent(agent)
                 nbHunters++
             }
@@ -67,7 +67,8 @@ fun main(args: Array<String>) {
     var sma = Main()
     var frame = JFrame("sma")
     var vue = Vue("coucou",sma)
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+
     var scrollPane = JScrollPane( vue )
     frame.contentPane = scrollPane
     frame.setSize(PropertiesAvatar.INSTANCE.canvasSizeX, PropertiesAvatar.INSTANCE.canvasSizeY)
