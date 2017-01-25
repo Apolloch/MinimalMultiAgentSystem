@@ -14,6 +14,7 @@ import java.util.*
 
 class Avatar(x :Int , y : Int, val dValues : Array<Array<Int>>):Agent(x,y, Color.BLUE),KeyListener {
     var age: Int
+    var defenderCount : Int
     var direction: Direction
     private var tempY: Int
     private var tempX: Int
@@ -21,6 +22,7 @@ class Avatar(x :Int , y : Int, val dValues : Array<Array<Int>>):Agent(x,y, Color
     private var speed: Int
 
     init {
+        defenderCount = 0
         speed = PropertiesAvatar.INSTANCE.speedAvatar
         age = 0
         tempX = x
@@ -30,6 +32,10 @@ class Avatar(x :Int , y : Int, val dValues : Array<Array<Int>>):Agent(x,y, Color
 
     override fun decide(environnement: Array<Array<Agent?>>) {
         age++
+        if(defenderCount==4){
+            PropertiesAvatar.INSTANCE.nbTicks=1
+            println("gagné")
+        }
         calculateDValues(environnement)
         if (age % speed == 0) {
             tempX = x + direction.x
@@ -41,7 +47,16 @@ class Avatar(x :Int , y : Int, val dValues : Array<Array<Int>>):Agent(x,y, Color
                     x = tempX
                     y = tempY
                     environnement[tempX][tempY] = this
-                } else {
+                }
+                else if(environnement[tempX][tempY] is Defender){
+                    defenderCount++
+                    environnement[x][y] = null
+                    x = tempX
+                    y = tempY
+                    environnement[tempX][tempY] = this
+
+                }
+                else {
                     particleCollisionGestion(environnement)
                 }
             } else {

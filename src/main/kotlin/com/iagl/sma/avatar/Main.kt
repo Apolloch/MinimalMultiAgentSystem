@@ -47,6 +47,17 @@ class Main : SMA() {
                 nbHunters++
             }
         }
+        var nbDefender = 0
+        while (nbDefender<4)
+        {
+            x = randomGenerator.nextInt(PropertiesAvatar.INSTANCE.gridSizeX)
+            y = randomGenerator.nextInt(PropertiesAvatar.INSTANCE.gridSizeY)
+            if(environnement[x][y]==null){
+                agent = Defender(x,y)
+                addAgent(agent)
+                nbDefender++
+            }
+        }
 
         var placed = false
         while (!placed)

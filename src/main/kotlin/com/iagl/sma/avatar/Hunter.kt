@@ -30,8 +30,10 @@ class Hunter(x :Int , y : Int,val dValues : Array<Array<Int>>):Agent(x,y, Color.
                             nextX = x + direction.x
                             nextY = y + direction.y
                         }
-                    }else if(dValues[x + direction.x][y + direction.y]==0)
+                    }else if(dValues[x + direction.x][y + direction.y]==0) {
                         PropertiesAvatar.INSTANCE.nbTicks = 1
+                        println("perdu")
+                    }
                 }
             }
             environnement[x][y] = null

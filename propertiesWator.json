@@ -8,7 +8,7 @@
   "scheduling":"SEQUENTIEL",
   "nbTicks":0,
   "grid":false,
-  "trace":false,
+  "trace":true,
   "seed":0,
   "refresh":1000,
   "nbShark":150,
@@ -16,5 +16,5 @@
   "sharkBreedTime":20,
   "sharkStarveTime":10,
   "fishBreedTime":15,
-  "torique" : false
+  "torique" : true
 }
